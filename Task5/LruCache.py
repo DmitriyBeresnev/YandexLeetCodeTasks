@@ -111,7 +111,6 @@ class DoublyLinkedList:
         # get prev and next nodes for provided node
         node_next = node.next
         node_prev = node.prev
-
         # change pointers of prev and next nodes to actually delete given node
         node_prev.next = node_next
         node_next.prev = node_prev
