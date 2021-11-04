@@ -63,6 +63,44 @@ Similar Questions
 Hide Hint 1
 Maintain a sliding window where there is at most one zero on it.
 
+
+
+Intuition
+There are only 3 cases that we need to take care of:
+(1) only zeros in nums
+(2) only ones in nums
+(3) others
+
+Complexity
+Time O(N)
+Space O(N)
+
+Solution
+
+def longestSubarray(self, nums: List[int]) -> int:
+	# We get the group's key and length first, e.g. [0,1,1,1,0,1,1,0,1] -> [[0 , 1], [1, 3], [0, 1], [1, 2], [0, 1], [1, 1]]
+	groupby = [ [k, len(list(i))] for k, i in itertools.groupby(nums)]
+
+
+	if len(groupby) == 1:
+		# case(1) only zeros in nums
+		if groupby[0][0] == 0:
+			return 0
+		# case(2) only ones in nums
+		elif groupby[0][0] == 1:
+			return groupby[0][1] - 1
+	else:
+		# case(3) others
+		res = max([times for i,times in groupby if i==1])
+		for i in range(1, len(groupby)-1):
+			# if both sides have ones and are separated by only 1 zero
+			if groupby[i][0] == 0 and groupby[i][1] == 1:
+				res = max(res, groupby[i-1][1] + groupby[i+1][1])
+		return res
+
+Similar Sliding Window Problems
+1156. Swap For Longest Repeated Character Substring
+
 '''
 
 
